@@ -1,0 +1,74 @@
+/*
+ * UpAssist.Neos.UiSidebarCollapse
+ *
+ * Collapsed state = the menu panel is closed (no .neos-menu-panel-open on
+ * <body>). The panel then shows as a rail as wide as the hamburger button.
+ * Everything is scoped to the body class that SidebarCollapse.js sets, so
+ * without JavaScript Neos behaves as before.
+ */
+
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel {
+    display: block;
+    left: 0;
+    width: var(--menuButtonWidth, 54px);
+}
+
+/* Labels: the icon keeps its own font size, the text collapses to nothing. */
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-section a,
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-section span.neos-menu-item {
+    font-size: 0;
+    padding-right: 0;
+}
+
+/* Section toggles do not fit; every section is shown expanded in the rail. */
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-panel-toggle {
+    display: none;
+}
+
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-section .neos-menu-section-content {
+    display: block;
+    opacity: 1;
+}
+
+/* Neos 9: user menu at the bottom of the panel, only the avatar remains. */
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-toggle {
+    justify-content: center !important;
+    padding-left: 0;
+    padding-right: 0;
+    cursor: pointer;
+}
+
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-toggle > span,
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-toggle > i,
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-menu {
+    display: none !important;
+}
+
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) #neos-user-actions .neos-user-image {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+/* Current module: Neos does not mark it, so SidebarCollapse.js does. */
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .upassist-sidebarcollapse-current,
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .upassist-sidebarcollapse-current i {
+    color: var(--colors-PrimaryBlue, #00adee);
+}
+
+body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .upassist-sidebarcollapse-current i {
+    box-shadow: inset 3px 0 0 var(--colors-PrimaryBlue, #00adee);
+}
+
+/*
+ * The module content starts right where the rail ends. Give it the same
+ * 16px gap the sticky footer has, and keep the footer buttons clear of
+ * the rail.
+ */
+body.upassist-sidebarcollapse.neos-module > .neos-module-wrap {
+    padding-left: calc(var(--menuButtonWidth, 54px) + 16px);
+}
+
+body.upassist-sidebarcollapse.neos-module > .neos-module-wrap .neos-footer {
+    margin-left: calc(-1 * (var(--menuButtonWidth, 54px) + 16px));
+    padding-left: calc(var(--menuButtonWidth, 54px) + 16px);
+}

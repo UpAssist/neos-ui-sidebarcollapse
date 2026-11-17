@@ -1,0 +1,9 @@
+Neos:
+  Neos:
+    # Loaded on every backend module (Media, Workspaces, User management, ...).
+    moduleConfiguration:
+      additionalResources:
+        styleSheets:
+          'UpAssist.Neos.UiSidebarCollapse:SidebarCollapse': 'resource://UpAssist.Neos.UiSidebarCollapse/Public/Styles/SidebarCollapse.css'
+        javaScripts:
+          'UpAssist.Neos.UiSidebarCollapse:SidebarCollapse': 'resource://UpAssist.Neos.UiSidebarCollapse/Public/JavaScript/SidebarCollapse.js'

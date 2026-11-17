@@ -1,0 +1,20 @@
+{
+    "name": "upassist/neos-ui-sidebarcollapse",
+    "type": "neos-package",
+    "description": "Icon-only collapsed sidebar for the Neos CMS backend modules",
+    "license": "MIT",
+    "keywords": ["neos", "neos-ui", "backend", "sidebar", "menu", "collapse"],
+    "homepage": "https://github.com/UpAssist/neos-ui-sidebarcollapse",
+    "support": {
+        "issues": "https://github.com/UpAssist/neos-ui-sidebarcollapse/issues",
+        "source": "https://github.com/UpAssist/neos-ui-sidebarcollapse"
+    },
+    "require": {
+        "neos/neos": "^8.3 || ^9.0"
+    },
+    "extra": {
+        "neos": {
+            "package-key": "UpAssist.Neos.UiSidebarCollapse"
+        }
+    }
+}
