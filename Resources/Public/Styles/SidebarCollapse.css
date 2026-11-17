@@ -1,61 +1,63 @@
 /*
  * UpAssist.Neos.UiSidebarCollapse
  *
- * Collapsed state = the menu panel is closed (no .neos-menu-panel-open on
- * <body>). The panel then shows as a rail as wide as the hamburger button.
- * Everything is scoped to the body class that SidebarCollapse.js sets, so
- * without JavaScript Neos behaves as before.
+ * Rail mode (body class upassist-sidebarcollapse-rail, the default) with the
+ * menu panel closed (no .neos-menu-panel-open on <body>): the panel shows as
+ * a rail as wide as the hamburger button. The toggle at the bottom of the
+ * menu removes the rail class, which gives the normal hidden menu.
+ * Everything is scoped to classes that SidebarCollapse.js sets, so without
+ * JavaScript Neos behaves as before.
  */
 
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel {
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-panel {
     display: block;
     left: 0;
     width: var(--menuButtonWidth, 54px);
 }
 
 /* Labels: the icon keeps its own font size, the text collapses to nothing. */
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-section a,
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-section span.neos-menu-item {
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-section a,
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-section span.neos-menu-item {
     font-size: 0;
     padding-right: 0;
 }
 
 /* Section toggles do not fit; every section is shown expanded in the rail. */
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-panel-toggle {
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-panel-toggle {
     display: none;
 }
 
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-section .neos-menu-section-content {
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-panel .neos-menu-section .neos-menu-section-content {
     display: block;
     opacity: 1;
 }
 
 /* Neos 9: user menu at the bottom of the panel, only the avatar remains. */
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-toggle {
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-toggle {
     justify-content: center !important;
     padding-left: 0;
     padding-right: 0;
     cursor: pointer;
 }
 
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-toggle > span,
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-toggle > i,
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-menu {
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-toggle > span,
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-toggle > i,
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-bottom-wrapper .neos-dropdown-menu {
     display: none !important;
 }
 
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) #neos-user-actions .neos-user-image {
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) #neos-user-actions .neos-user-image {
     margin: 0;
     flex-shrink: 0;
 }
 
 /* Current module: Neos does not mark it, so SidebarCollapse.js does. */
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .upassist-sidebarcollapse-current,
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .upassist-sidebarcollapse-current i {
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-panel .upassist-sidebarcollapse-current,
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-panel .upassist-sidebarcollapse-current i {
     color: var(--colors-PrimaryBlue, #00adee);
 }
 
-body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .upassist-sidebarcollapse-current i {
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-panel .upassist-sidebarcollapse-current i {
     box-shadow: inset 3px 0 0 var(--colors-PrimaryBlue, #00adee);
 }
 
@@ -64,11 +66,64 @@ body.upassist-sidebarcollapse:not(.neos-menu-panel-open) .neos-menu-panel .upass
  * 16px gap the sticky footer has, and keep the footer buttons clear of
  * the rail.
  */
-body.upassist-sidebarcollapse.neos-module > .neos-module-wrap {
+body.upassist-sidebarcollapse-rail.neos-module > .neos-module-wrap {
     padding-left: calc(var(--menuButtonWidth, 54px) + 16px);
 }
 
-body.upassist-sidebarcollapse.neos-module > .neos-module-wrap .neos-footer {
+body.upassist-sidebarcollapse-rail.neos-module > .neos-module-wrap .neos-footer {
     margin-left: calc(-1 * (var(--menuButtonWidth, 54px) + 16px));
     padding-left: calc(var(--menuButtonWidth, 54px) + 16px);
+}
+
+/* Toggle between the icon rail and the hidden menu, at the bottom of the menu. */
+body.upassist-sidebarcollapse .upassist-sidebarcollapse-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+body.upassist-sidebarcollapse .upassist-sidebarcollapse-toggle {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    margin: 0;
+    padding: 0 16px 0 var(--menuButtonWidth, 54px);
+    border: 0;
+    border-top: 1px solid #3f3f3f;
+    background: #222;
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+body.upassist-sidebarcollapse .upassist-sidebarcollapse-toggle i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--menuButtonWidth, 54px);
+    margin: 0;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: center;
+}
+
+body.upassist-sidebarcollapse .upassist-sidebarcollapse-toggle:hover,
+body.upassist-sidebarcollapse .upassist-sidebarcollapse-toggle:focus-visible {
+    color: var(--colors-PrimaryBlue, #00adee);
+}
+
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .upassist-sidebarcollapse-toggle span {
+    display: none;
+}
+
+body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .upassist-sidebarcollapse-toggle {
+    padding-right: 0;
 }

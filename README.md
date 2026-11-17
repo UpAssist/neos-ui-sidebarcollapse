@@ -29,13 +29,14 @@ For local development against a checkout, add a path repository to the distribut
 
 - **Closed menu:** a rail with the icon of every section and module. Hovering an icon shows its label as a tooltip. The module you are in is marked in blue.
 - **Open menu:** the normal Neos menu, unchanged.
+- **Hide the icon bar:** the button at the bottom of the menu (`«`) switches the closed menu back to the normal Neos behaviour: hidden completely. Open the menu with the hamburger button and click **Show icon bar** to get the rail back. The choice is stored per browser (`localStorage`, key `upassist.sidebarcollapse.mode`) and applies to all modules.
 - In the rail every section is shown expanded, since the section toggles do not fit. The collapsed state you set in the full menu is kept.
 - Neos 9 shows the user menu at the bottom of the menu. In the rail only the avatar remains; clicking it opens the full menu, a second click opens the user menu.
 - The module content and the sticky footer get a 16px gap next to the rail.
 
 ## How it works
 
-`SidebarCollapse.js` adds the class `upassist-sidebarcollapse` to `<body>`, sets a `title` on every menu item and marks the current module. `SidebarCollapse.css` only applies when that class is present and the menu is closed (`body:not(.neos-menu-panel-open)`), so without JavaScript Neos behaves as before.
+`SidebarCollapse.js` adds the class `upassist-sidebarcollapse` to `<body>`, plus `upassist-sidebarcollapse-rail` while the icon bar is switched on. It also sets a `title` on every menu item, marks the current module and adds the toggle button. The rail styles in `SidebarCollapse.css` only apply when the rail class is present and the menu is closed (`body:not(.neos-menu-panel-open)`), so without JavaScript Neos behaves as before.
 
 Both files are loaded in every backend module through `Neos.Neos.moduleConfiguration.additionalResources`.
 
@@ -48,7 +49,7 @@ Both files are loaded in every backend module through `Neos.Neos.moduleConfigura
 
 | File | Purpose |
 |---|---|
-| `Resources/Public/JavaScript/SidebarCollapse.js` | Body class, tooltips, current module, avatar click |
+| `Resources/Public/JavaScript/SidebarCollapse.js` | Body classes, tooltips, current module, toggle button, avatar click |
 | `Resources/Public/Styles/SidebarCollapse.css` | Rail layout and content spacing |
 | `Configuration/Settings.yaml` | Registers the resources for all modules |
 
