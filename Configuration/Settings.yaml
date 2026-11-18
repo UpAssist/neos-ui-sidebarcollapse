@@ -7,3 +7,20 @@ Neos:
           'UpAssist.Neos.UiSidebarCollapse:SidebarCollapse': 'resource://UpAssist.Neos.UiSidebarCollapse/Public/Styles/SidebarCollapse.css'
         javaScripts:
           'UpAssist.Neos.UiSidebarCollapse:SidebarCollapse': 'resource://UpAssist.Neos.UiSidebarCollapse/Public/JavaScript/SidebarCollapse.js'
+
+    # Button labels, available to JavaScript through xliff.json.
+    userInterface:
+      translation:
+        autoInclude:
+          UpAssist.Neos.UiSidebarCollapse:
+            - Main
+
+    # Loaded in the content module (Neos.Neos.Ui).
+    Ui:
+      resources:
+        stylesheets:
+          'UpAssist.Neos.UiSidebarCollapse:SidebarCollapse':
+            resource: 'resource://UpAssist.Neos.UiSidebarCollapse/Public/Styles/SidebarCollapse.css'
+        javascript:
+          'UpAssist.Neos.UiSidebarCollapse:SidebarCollapse':
+            resource: 'resource://UpAssist.Neos.UiSidebarCollapse/Public/JavaScript/SidebarCollapse.js'

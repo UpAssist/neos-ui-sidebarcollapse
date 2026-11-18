@@ -2,11 +2,13 @@
  * UpAssist.Neos.UiSidebarCollapse
  *
  * Rail mode (body class upassist-sidebarcollapse-rail, the default) with the
- * menu panel closed (no .neos-menu-panel-open on <body>): the panel shows as
- * a rail as wide as the hamburger button. The toggle at the bottom of the
- * menu removes the rail class, which gives the normal hidden menu.
- * Everything is scoped to classes that SidebarCollapse.js sets, so without
- * JavaScript Neos behaves as before.
+ * menu closed: the menu shows as a rail as wide as the hamburger button. The
+ * toggle at the bottom of the menu removes the rail class, which gives the
+ * normal hidden menu. Everything is scoped to classes that
+ * SidebarCollapse.js sets, so without JavaScript Neos behaves as before.
+ *
+ * Part 1: backend modules (server-rendered menu, .neos-menu-panel).
+ * Part 2: content module (Neos.Neos.Ui, hashed CSS module class names).
  */
 
 body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .neos-menu-panel {
@@ -95,7 +97,7 @@ body.upassist-sidebarcollapse .upassist-sidebarcollapse-toggle {
     background: #222;
     color: #fff;
     font: inherit;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 40px;
     text-align: left;
     white-space: nowrap;
@@ -120,10 +122,183 @@ body.upassist-sidebarcollapse .upassist-sidebarcollapse-toggle:focus-visible {
     color: var(--colors-PrimaryBlue, #00adee);
 }
 
-body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .upassist-sidebarcollapse-toggle span {
+body.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-ui):not(.neos-menu-panel-open) .upassist-sidebarcollapse-toggle span {
     display: none;
 }
 
-body.upassist-sidebarcollapse-rail:not(.neos-menu-panel-open) .upassist-sidebarcollapse-toggle {
+body.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-ui):not(.neos-menu-panel-open) .upassist-sidebarcollapse-toggle {
+    padding-right: 0;
+}
+
+/* ======================================================================
+ * Part 2: content module (Neos.Neos.Ui)
+ *
+ * The React app keeps the drawer open in rail mode (see SidebarCollapse.js);
+ * without upassist-sidebarcollapse-expanded it is narrowed to the rail.
+ * Class names are hashed (e.g. "sD1RHa_drawer"), so they are matched on
+ * their suffix. The drawer root is the "_drawer" element that is not one of
+ * its "_drawer__..." children.
+ * ====================================================================== */
+
+/* The rail: the drawer, narrowed. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer"]:not([class*="_drawer__"]) {
+    width: 54px;
+    overflow: hidden auto;
+    scrollbar-width: none;
+    transition: none;
+    /* A line along the right edge, like the borders between the other UI
+     * parts. Drawn outside the 54px, over the first pixel next to it. */
+    box-shadow: 1px 0 0 var(--colors-ContrastDark, #3f3f3f);
+}
+
+/* The section contents are indented; in the rail every icon is centred. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer"] [class*="_panel__contents"] {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Current item: Neos does not mark it, so SidebarCollapse.js does. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer"] button.upassist-sidebarcollapse-current {
+    color: var(--colors-PrimaryBlue, #00adee);
+    box-shadow: inset 3px 0 0 var(--colors-PrimaryBlue, #00adee);
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__menuItemGroupsWrapper"] {
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
+/* Labels and section toggles do not fit; only the icons remain. Some labels
+ * are bare text nodes, so the text collapses to font-size 0. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__menuItem"] button {
+    font-size: 0;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__menuItem"] button svg {
+    font-size: 14px !important;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__menuItem"] button > span,
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__menuItem"] [class*="_panel__toggleBtn"] {
+    display: none !important;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__menuItem"] button {
+    width: 54px;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__menuItem"] button svg {
+    margin: 0 !important;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__menuItem"] h2,
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__menuItem"] a {
+    width: 54px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Every section is shown expanded in the rail. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer"] .ReactCollapse--collapse {
+    height: auto !important;
+    overflow: visible !important;
+    visibility: visible !important;
+}
+
+/* Neos 9: user menu at the bottom of the drawer, only the avatar remains. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__bottom"] [class*="_dropDown__btn"] {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__bottom"] [class*="_dropDown__btn"] > span,
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__bottom"] [class*="_dropDown__btn"] > svg,
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__bottom"] [class*="_dropDown__contents"] {
+    display: none !important;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__bottom"] [class*="_user__image"] {
+    margin: 0;
+}
+
+/* The hamburger button looks inactive while only the rail shows. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-MenuToggler {
+    color: inherit;
+    background: transparent;
+}
+
+/* The rest of the UI moves right, next to the rail. The top bar stays.
+ * #neos-application is the grid of the whole UI. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail #neos-application:not([class*="_app--isFullScreen"]) {
+    padding-left: 54px;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail #neos-application:not([class*="_app--isFullScreen"]) > [class*="_primaryToolbar"] {
+    width: calc(100% + 54px);
+    margin-left: -54px;
+}
+
+/* The middle column (breadcrumb toolbar, canvas) may shrink below the width
+ * of its content. Otherwise a long breadcrumb widens the grid past the
+ * viewport once a content element is selected, and the rail would push the
+ * inspector even further out of view. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail #neos-application > [class*="_secondaryToolbar"],
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail #neos-application > [class*="_contentCanvas"] {
+    min-width: 0;
+}
+
+/* In that narrower column the breadcrumb gives way, so the edit mode,
+ * preview and full screen buttons stay visible. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail #neos-application > [class*="_secondaryToolbar"] > [class*="_secondaryToolbar__leftHandedActions"],
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail #neos-application > [class*="_secondaryToolbar"] > [class*="_secondaryToolbar__leftHandedActions"] > * {
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* Full screen editing: no rail. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application[class*="_app--isFullScreen"] [class*="_drawer"]:not([class*="_drawer__"]) {
+    display: none;
+}
+
+/* The toggle at the bottom of the drawer, below the menu items. */
+body.upassist-sidebarcollapse-ui .upassist-sidebarcollapse-toggle {
+    flex-shrink: 0;
+    margin-top: auto;
+    border-top-color: #3f3f3f;
+}
+
+/* Neos 8: in the rail the toggle is the lowest item of the drawer (the UI
+ * version below it is hidden) and sits next to the bottom bar of the left
+ * sidebar (40px plus the 1px line above it). One pixel taller puts both
+ * lines at the same height. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) .upassist-sidebarcollapse-toggle:has(+ [class*="_drawer__bottom"] [class*="_drawer__version"]) {
+    height: 41px;
+}
+
+/* The toggle takes over the push to the bottom from the bottom section. */
+body.upassist-sidebarcollapse-ui .upassist-sidebarcollapse-toggle + [class*="_drawer__bottom"] {
+    margin-top: 0;
+}
+
+/* Neos 8: the UI version below the menu does not fit in the rail. */
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) #neos-application [class*="_drawer__version"] {
+    display: none;
+}
+
+body.upassist-sidebarcollapse-ui .upassist-sidebarcollapse-toggle i::before {
+    content: attr(data-glyph);
+    font-style: normal;
+    font-size: 18px;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) .upassist-sidebarcollapse-toggle span {
+    display: none;
+}
+
+body.upassist-sidebarcollapse-ui.upassist-sidebarcollapse-rail:not(.upassist-sidebarcollapse-expanded) .upassist-sidebarcollapse-toggle {
     padding-right: 0;
 }

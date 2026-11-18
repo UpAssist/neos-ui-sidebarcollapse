@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="" product-name="UpAssist.Neos.UiSidebarCollapse" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="hideMenu" xml:space="preserve">
+        <source>Hide menu</source>
+      </trans-unit>
+      <trans-unit id="collapseToIcons" xml:space="preserve">
+        <source>Collapse to icons</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
