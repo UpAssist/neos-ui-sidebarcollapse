@@ -6,6 +6,12 @@ When the module menu is closed, it stays visible as a narrow rail with only the 
 
 Works with Neos 8.3+ and Neos 9, with no build step.
 
+![The Neos content UI with the icon rail](Documentation/Images/content-ui-rail-light.jpg)
+
+![The Media module with the icon rail](Documentation/Images/media-module-rail-dark.jpg)
+
+*The icon rail in Neos 9: the content UI (in light mode, with [`upassist/neos-ui-thememode`](https://github.com/UpAssist/neos-ui-thememode)) and the Media module.*
+
 ## Installation
 
 ```bash
