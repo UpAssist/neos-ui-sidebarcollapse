@@ -12,6 +12,13 @@ Works with Neos 8.3+ and Neos 9, with no build step.
 
 *The icon rail in Neos 9: the content UI (in light mode, with [`upassist/neos-ui-thememode`](https://github.com/UpAssist/neos-ui-thememode)) and the Media module.*
 
+## Compatibility
+
+| Neos | Package | Tested |
+| --- | --- | --- |
+| 8.3, 8.4 | `^1.0` | 1.0.2, with and without `neos-ui-thememode` (light and dark) |
+| 9.0, 9.1, 9.2 | `^1.0` | 1.0.2, with and without `neos-ui-thememode` (light and dark) |
+
 ## Installation
 
 ```bash
