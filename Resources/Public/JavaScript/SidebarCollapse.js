@@ -302,6 +302,16 @@
             }
         }
 
+        // The full menu may still have its auto-close pending (the mouse left
+        // it less than 500ms ago). A mouseover from outside the window is a
+        // mouse enter for React, which clears that timer, so it cannot close
+        // the rail the hamburger button just returned to.
+        function cancelAutoClose() {
+            if (drawer) {
+                drawer.dispatchEvent(new MouseEvent('mouseover', {bubbles: true, relatedTarget: null}));
+            }
+        }
+
         // Rail mode needs the drawer open (narrowed by CSS). If the app closed
         // it, e.g. on Escape, that ends the full menu: back to the rail.
         function sync() {
@@ -343,7 +353,11 @@
             if (target.closest('#neos-MenuToggler')) {
                 event.preventDefault();
                 event.stopPropagation();
-                setExpanded(!isExpanded());
+                var collapsing = isExpanded();
+                setExpanded(!collapsing);
+                if (collapsing) {
+                    cancelAutoClose();
+                }
                 sync();
                 return;
             }
@@ -353,6 +367,26 @@
                 event.preventDefault();
                 event.stopPropagation();
                 setExpanded(true);
+            }
+        }, true);
+
+        // The drawer closes itself 500ms after the mouse leaves it (React
+        // derives onMouseLeave from `mouseout`). For the rail that meant a
+        // close and reopen, a visible flash, every time the mouse left it.
+        // A leave from a drawer that is already hidden (after the toggle
+        // closed it under the mouse) armed the same timer, which then closed
+        // the menu again right after the hamburger button opened it. Neither
+        // case should start the timer; the full menu keeps its auto-close.
+        window.addEventListener('mouseout', function (event) {
+            if (!drawer || !(event.target instanceof Node) || !drawer.contains(event.target)) {
+                return;
+            }
+            var related = event.relatedTarget;
+            if (related instanceof Node && drawer.contains(related)) {
+                return;
+            }
+            if (!drawerIsOpen() || (isRail() && !isExpanded())) {
+                event.stopPropagation();
             }
         }, true);
 
